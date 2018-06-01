@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorAccent"
+    android:background="@color/colorBlack"
+    android:gravity="center"
     tools:context=".SplashActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ImageView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="@color/colorBlack"
-        android:layout_gravity="center"/>
+        android:id="@+id/splash_img"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/hs_clockwork_gnome"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/splash_img"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="-100dp"
+        android:src="@drawable/hs_db_label"/>
 
-
-</FrameLayout>
+</RelativeLayout>
