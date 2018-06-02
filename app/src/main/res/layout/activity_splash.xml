@@ -21,6 +21,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="-100dp"
-        android:src="@drawable/hs_db_label"/>
+        android:src="@drawable/hs_label"/>
 
 </RelativeLayout>
