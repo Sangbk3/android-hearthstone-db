@@ -2,10 +2,12 @@ package com.sangbk3.hearthstonedb;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.sangbk3.hearthstonedb.adapter.CardsAdapter;
 import com.sangbk3.hearthstonedb.api.ApiManager;
 import com.sangbk3.hearthstonedb.model.Card;
@@ -17,8 +19,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private List<Card> cards;
     private RecyclerView recyclerView;
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         cardsAdapter = new CardsAdapter(cards, R.layout.list_cards, getApplicationContext());
         recyclerView.setAdapter(cardsAdapter);
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 cards = response.body().get("Basic");
                 cardsAdapter.setCards(cards);
                 cardsAdapter.notifyDataSetChanged();
+
+                MainActivity.this.getSharedPreferences().edit().putString("HEARTHSTONE_CARDS", new Gson().toJson(response.body())).apply();
 
                 Log.d("SANGLOG:", "NUMBER OF CARDS: " + cards.size());
             }
