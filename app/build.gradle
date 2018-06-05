@@ -21,6 +21,10 @@ android {
             buildConfigField 'String', "hearthstone_db_api_key", hearthstone_db_api_key
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
