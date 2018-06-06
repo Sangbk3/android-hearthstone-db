@@ -23,4 +23,24 @@
         android:layout_marginTop="-100dp"
         android:src="@drawable/hs_label"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/github_address"
+        android:layout_alignParentRight="true"
+        android:text="@string/app_dev_info"
+        android:paddingRight="5dp"
+        android:textColor="@color/colorGreyLighter"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@id/github_address"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingBottom="10dp"
+        android:paddingRight="5dp"
+        android:textColor="@color/colorGreyLighter"
+        android:text="@string/app_github_address"/>
+
 </RelativeLayout>

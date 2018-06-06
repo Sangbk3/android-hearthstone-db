@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">hearthstoneDB</string>
+    <string name="app_dev_info">Produced by Sang in June 2018</string>
+    <string name="app_github_address">https://github.com/sangbk3</string>
 
     <string name="search_hint">Search for a card …</string>
-
 
 </resources>

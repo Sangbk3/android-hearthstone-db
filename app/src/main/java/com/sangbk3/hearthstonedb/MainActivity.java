@@ -58,7 +58,10 @@ public class MainActivity extends BaseActivity {
         call.enqueue(new Callback<HashMap<String, List<Card>>>() {
             @Override
             public void onResponse(Call<HashMap<String, List<Card>>> call, Response<HashMap<String, List<Card>>> response) {
-                cards = response.body().get("Basic");
+                cards = new ArrayList<>();
+                for (String key : response.body().keySet()) {
+                    cards.addAll(response.body().get(key));
+                }
                 cardsAdapter.setCards(cards);
                 cardsAdapter.notifyDataSetChanged();
 
