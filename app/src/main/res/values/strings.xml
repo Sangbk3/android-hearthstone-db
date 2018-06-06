@@ -4,5 +4,7 @@
     <string name="app_github_address">https://github.com/sangbk3</string>
 
     <string name="search_hint">Search for a card …</string>
+    <string name="ok">OK</string>
+    <string name="api_request_failed">API Request has failed. Check if your API Key is valid.</string>
 
 </resources>

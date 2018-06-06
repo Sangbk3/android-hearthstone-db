@@ -1,6 +1,8 @@
 package com.sangbk3.hearthstonedb;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +28,7 @@ import retrofit2.Response;
 
 public class MainActivity extends BaseActivity {
 
+    public static final String HEARTHSTONE_CARDS_KEY = "HEARTHSTONE_CARDS";
     private List<Card> cards;
     private RecyclerView recyclerView;
     private SearchView searchView;
@@ -58,22 +61,38 @@ public class MainActivity extends BaseActivity {
         call.enqueue(new Callback<HashMap<String, List<Card>>>() {
             @Override
             public void onResponse(Call<HashMap<String, List<Card>>> call, Response<HashMap<String, List<Card>>> response) {
-                cards = new ArrayList<>();
-                for (String key : response.body().keySet()) {
-                    cards.addAll(response.body().get(key));
+                if (!(response == null) && response.isSuccessful() && !response.body().isEmpty()) {
+                    cards = new ArrayList<>();
+                    for (String key : response.body().keySet()) {
+                        cards.addAll(response.body().get(key));
+                    }
+                    cardsAdapter.setCards(cards);
+                    cardsAdapter.notifyDataSetChanged();
+
+                    MainActivity.this.getSharedPreferences().edit().putString(HEARTHSTONE_CARDS_KEY, new Gson().toJson(response.body())).apply();
+
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("SANGLOG:", "NUMBER OF CARDS: " + cards.size());
+                } else {
+                    progressBar.setVisibility(View.GONE);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    AlertDialog alertDialog =
+                            builder.setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                            .setMessage(R.string.api_request_failed)
+                            .create();
+                    alertDialog.show();
                 }
-                cardsAdapter.setCards(cards);
-                cardsAdapter.notifyDataSetChanged();
-
-                MainActivity.this.getSharedPreferences().edit().putString("HEARTHSTONE_CARDS", new Gson().toJson(response.body())).apply();
-
-                progressBar.setVisibility(View.GONE);
-                Log.d("SANGLOG:", "NUMBER OF CARDS: " + cards.size());
             }
 
             @Override
             public void onFailure(Call<HashMap<String, List<Card>>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                builder.setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                        .setMessage(R.string.api_request_failed)
+                        .create();
 
                 Log.d("SANGERR:", "ERROR LOADING DATA: "+t.toString());
             }
