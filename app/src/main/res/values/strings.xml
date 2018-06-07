@@ -6,5 +6,6 @@
     <string name="search_hint">Search for a card …</string>
     <string name="ok">OK</string>
     <string name="api_request_failed">API Request has failed. Check if your API Key is valid.</string>
+    <string name="api_loading_text">Casually Life Tapping 4676 times …</string>
 
 </resources>

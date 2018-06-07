@@ -23,14 +23,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/progress_bar"
-        android:background="@color/colorGreyLighter">
+        android:background="@color/colorHSOrange">
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="30dp"
             android:layout_gravity="center"
             android:progressDrawable="@drawable/circular_progress_bar"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="30dp"
+            android:textColor="@color/colorWhite"
+            android:text="@string/api_loading_text"/>
     </FrameLayout>
 
 </RelativeLayout>
