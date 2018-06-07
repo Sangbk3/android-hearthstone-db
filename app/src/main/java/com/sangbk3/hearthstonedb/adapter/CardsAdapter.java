@@ -62,23 +62,25 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardsViewHol
 
     @Override
     public void onBindViewHolder(CardsViewHolder holder, int position) {
-        Card card = filteredCards.get(position);
+        if (position < filteredCards.size()) {
+            Card card = filteredCards.get(position);
 
-        String imageUrl = "https://vignette.wikia.nocookie.net/hearthstone/images/c/c4/Card_back-Default.png/revision/latest/scale-to-width-down/322?cb=20140823204025";
+            String imageUrl = "https://vignette.wikia.nocookie.net/hearthstone/images/c/c4/Card_back-Default.png/revision/latest/scale-to-width-down/322?cb=20140823204025";
 
-        if (card.getImg() != null) {
-            imageUrl = card.getImg();
+            if (card.getImg() != null) {
+                imageUrl = card.getImg();
+            }
+
+            Picasso.with(context)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.hs_cardback)
+                    .error(R.drawable.hs_cardback)
+                    .into(holder.cardImageView);
+
+            holder.nameView.setText(card.getName());
+            holder.typeView.setText(card.getType());
+            holder.playerClassView.setText(card.getPlayerClass());
         }
-
-        Picasso.with(context)
-                .load(imageUrl)
-                .placeholder(R.drawable.hs_cardback)
-                .error(R.drawable.hs_cardback)
-                .into(holder.cardImageView);
-
-        holder.nameView.setText(card.getName());
-        holder.typeView.setText(card.getType());
-        holder.playerClassView.setText(card.getPlayerClass());
     }
 
     @Override
@@ -94,30 +96,27 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardsViewHol
             protected FilterResults performFiltering(CharSequence constraint) {
                 final String charString = constraint.toString();
 
+                List<Card> newFilteredCards = new ArrayList<>();
+
                 if (charString.isEmpty()) {
-                    filteredCards = cards;
+                    newFilteredCards = cards;
                 } else {
-                    List<Card> newFilteredCards = new ArrayList<>();
                     for (Card c : cards) {
                         if (c.getName().toLowerCase().contains(charString.toLowerCase())) {
                             newFilteredCards.add(c);
                         }
                     }
-
-                    filteredCards = newFilteredCards;
                 }
 
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = filterResults;
-
-                Log.d("Sangbug", "filter: changed data for cards " + filteredCards.size());
+                filterResults.values = newFilteredCards;
 
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                Log.d("Sangbug", "publishResults: publishing data changed");
+                filteredCards = (List<Card>) results.values;
                 notifyDataSetChanged();
             }
         };

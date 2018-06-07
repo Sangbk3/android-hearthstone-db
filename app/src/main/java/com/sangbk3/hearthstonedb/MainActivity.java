@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity {
         cards = new ArrayList<>();
 
         recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new NoAnimGridLayoutManager(this, 2));
 
         cardsAdapter = new CardsAdapter(cards, cards, R.layout.list_cards, getApplicationContext());
         recyclerView.setAdapter(cardsAdapter);
@@ -114,14 +114,14 @@ public class MainActivity extends BaseActivity {
             public boolean onQueryTextSubmit(String query) {
                 Log.d("Sangbug", "onQueryTextSubmit: Querying based on query change");
                 cardsAdapter.getFilter().filter(query);
-                return false;
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.d("Sangbug", "onQueryTextChange: Query based on query change");
                 cardsAdapter.getFilter().filter(newText);
-                return false;
+                return true;
             }
         });
 
